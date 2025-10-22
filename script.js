@@ -1,17 +1,17 @@
-// Array to store quote objects
+// Array of quote objects
 const quotes = [
   { text: "The future depends on what you do today.", category: "Motivation" },
   { text: "Life is 10% what happens to us and 90% how we react to it.", category: "Inspiration" },
   { text: "Code is like humor. When you have to explain it, it’s bad.", category: "Programming" },
 ];
 
-// DOM elements
+// Get elements from the DOM
 const quoteDisplay = document.getElementById("quoteDisplay");
 const newQuoteBtn = document.getElementById("newQuote");
 const addQuoteBtn = document.getElementById("addQuoteBtn");
 
-// Function to show a random quote
-function showRandomQuote() {
+// Function to display a random quote
+function displayRandomQuote() {
   if (quotes.length === 0) {
     quoteDisplay.textContent = "No quotes available yet!";
     return;
@@ -19,6 +19,7 @@ function showRandomQuote() {
 
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const quote = quotes[randomIndex];
+
   quoteDisplay.innerHTML = `
     <blockquote>"${quote.text}"</blockquote>
     <p><em>— ${quote.category}</em></p>
@@ -38,20 +39,17 @@ function addQuote() {
     return;
   }
 
-  // Add new quote object
   quotes.push({ text, category });
 
-  // Clear inputs
   textInput.value = "";
   categoryInput.value = "";
 
-  // Confirm addition visually
   quoteDisplay.innerHTML = `<p style="color: green;">Quote added successfully!</p>`;
 }
 
-// Event listeners
-newQuoteBtn.addEventListener("click", showRandomQuote);
+// Event listeners for buttons
+newQuoteBtn.addEventListener("click", displayRandomQuote);
 addQuoteBtn.addEventListener("click", addQuote);
 
-// Initial display
-showRandomQuote();
+// Show one quote at start
+displayRandomQuote();
