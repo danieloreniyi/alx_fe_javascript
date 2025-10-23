@@ -1,67 +1,38 @@
-// quotes array with required properties
+// Array of quotes with text and category properties
 const quotes = [
   { text: "The best way to get started is to quit talking and begin doing.", category: "Motivation" },
-  { text: "Life is what happens when you’re busy making other plans.", category: "Life" },
-  { text: "Success is not in what you have, but who you are.", category: "Success" }
+  { text: "Don’t let yesterday take up too much of today.", category: "Inspiration" },
+  { text: "It’s not whether you get knocked down, it’s whether you get up.", category: "Perseverance" }
 ];
 
-// core implementation used by the checker
+// Function to display a random quote
 function displayRandomQuote() {
-  const quoteDisplay = document.getElementById("quoteDisplay");
-  if (!quoteDisplay) return;
-
-  if (quotes.length === 0) {
-    quoteDisplay.innerHTML = "<p>No quotes available.</p>";
-    return;
-  }
-
   const randomIndex = Math.floor(Math.random() * quotes.length);
-  const randomQuote = quotes[randomIndex];
-
-  quoteDisplay.innerHTML = `<p><strong>Category:</strong> ${randomQuote.category}</p>
-  <p>"${randomQuote.text}"</p>`;
+  const quote = quotes[randomIndex];
+  const quoteDisplay = document.getElementById("quoteDisplay");
+  quoteDisplay.innerHTML = `<p>"${quote.text}"</p><small>Category: ${quote.category}</small>`;
 }
 
-// some tasks expect showRandomQuote name — keep both
-function showRandomQuote() {
-  displayRandomQuote();
-}
-
-// addQuote must exist and push to quotes array
+// Function to add a new quote
 function addQuote() {
-  const newTextEl = document.getElementById("newQuoteText");
-  const newCategoryEl = document.getElementById("newQuoteCategory");
-  if (!newTextEl || !newCategoryEl) return;
+  const newText = document.getElementById("newQuoteText").value.trim();
+  const newCategory = document.getElementById("newQuoteCategory").value.trim();
 
-  const newText = newTextEl.value.trim();
-  const newCategory = newCategoryEl.value.trim();
-
-  if (!newText || !newCategory) {
-    alert("Please enter both quote text and category.");
-    return;
+  if (newText && newCategory) {
+    quotes.push({ text: newText, category: newCategory });
+    document.getElementById("newQuoteText").value = "";
+    document.getElementById("newQuoteCategory").value = "";
+    displayRandomQuote();
+  } else {
+    alert("Please enter both quote text and category");
   }
-
-  quotes.push({ text: newText, category: newCategory });
-
-  // clear inputs
-  newTextEl.value = "";
-  newCategoryEl.value = "";
-
-  // update UI to show the newly added quote
-  displayRandomQuote();
 }
 
-// Ensure the button event listeners exist
-const newQuoteBtn = document.getElementById("newQuote");
-if (newQuoteBtn) {
-  newQuoteBtn.addEventListener("click", displayRandomQuote);
-}
+// Event listener for "Show New Quote" button
+document.getElementById("newQuote").addEventListener("click", displayRandomQuote);
 
-// Also attach addQuoteBtn listener in case checker inspects DOM event listeners instead of onclick
-const addQuoteBtn = document.getElementById("addQuoteBtn");
-if (addQuoteBtn) {
-  addQuoteBtn.addEventListener("click", addQuote);
-}
+// Event listener for "Add Quote" button
+document.getElementById("addQuoteButton").addEventListener("click", addQuote);
 
-// initial display
+// Display one quote by default
 displayRandomQuote();
