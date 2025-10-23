@@ -1,52 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dynamic Quote Generator — Storage & JSON</title>
-  <style>
-    /* Minimal styling to make the UI readable */
-    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; padding: 20px; max-width: 800px; margin: 0 auto; }
-    h1 { margin-bottom: 12px; }
-    #quoteDisplay { padding: 12px; border-radius: 8px; background:#f4f4f6; margin-bottom: 10px; min-height: 48px; }
-    .controls { margin: 10px 0; display: flex; gap:8px; flex-wrap:wrap; align-items:center; }
-    input[type="text"]{ padding:8px; border-radius:6px; border:1px solid #ccc;}
-    button { padding:8px 12px; border-radius:6px; border: none; cursor:pointer; background:#0366d6; color:white; }
-    button.secondary { background:#6c757d; }
-    .small { font-size: 0.9rem; color:#444; }
-    #lastViewed { font-size:0.85rem; color:#666; margin-top:8px; }
-    #importFile { display: inline-block; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Quote Generator</title>
 </head>
 <body>
   <h1>Dynamic Quote Generator</h1>
 
-  <div id="quoteDisplay" role="region" aria-live="polite"></div>
-  <div class="controls">
-    <button id="newQuote">Show New Quote</button>
-    <button id="showLast" class="secondary">Show Last Viewed</button>
+  <div>
+    <select id="categoryFilter" onchange="filterQuotes()">
+      <option value="all">All Categories</option>
+    </select>
   </div>
 
-  <section aria-label="Add new quote">
-    <h3>Add a new quote</h3>
-    <div class="controls">
-      <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-      <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-      <button id="addQuoteButton">Add Quote</button>
-    </div>
-  </section>
+  <div id="quoteDisplay"></div>
 
-  <section aria-label="Import / Export" style="margin-top:18px;">
-    <h3>Import / Export Quotes (JSON)</h3>
-    <div class="controls">
-      <button id="exportBtn" class="secondary">Export Quotes (JSON)</button>
-      <input type="file" id="importFile" accept=".json,application/json" />
-      <button id="clearStorage" class="secondary">Clear Local Storage</button>
-    </div>
-    <p class="small">Export creates a downloadable JSON file. Import a JSON file with an array of objects with <code>text</code> and <code>category</code>.</p>
-  </section>
+  <button id="newQuote">Show New Quote</button>
 
-  <div id="lastViewed" aria-live="polite"></div>
+  <div>
+    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
+    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
+    <button onclick="addQuote()">Add Quote</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
