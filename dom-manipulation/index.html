@@ -1,28 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Quote Generator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Quote Generator — Filtering</title>
+  <style>
+    body { font-family: system-ui, Arial; padding:18px; max-width:800px; margin:0 auto; }
+    #quoteDisplay { padding:12px; border-radius:6px; background:#f6f6f8; min-height:48px; margin-bottom:12px; }
+    .controls { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+    input[type="text"]{ padding:8px; border-radius:6px; border:1px solid #ccc; }
+    button { padding:8px 12px; border-radius:6px; border:none; background:#0366d6; color:#fff; cursor:pointer; }
+    select { padding:8px; border-radius:6px; border:1px solid #ccc; }
+  </style>
 </head>
 <body>
   <h1>Dynamic Quote Generator</h1>
 
-  <div>
-    <select id="categoryFilter" onchange="filterQuotes()">
+  <div class="controls">
+    <label for="categoryFilter">Filter by category:</label>
+    <select id="categoryFilter" onchange="filterQuote()">
       <option value="all">All Categories</option>
     </select>
+
+    <button id="newQuote">Show New Quote</button>
   </div>
 
-  <div id="quoteDisplay"></div>
+  <div id="quoteDisplay" role="region" aria-live="polite"></div>
 
-  <button id="newQuote">Show New Quote</button>
-
-  <div>
-    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-    <button onclick="addQuote()">Add Quote</button>
-  </div>
+  <section>
+    <h3>Add a new quote</h3>
+    <div class="controls">
+      <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
+      <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
+      <button id="addQuoteButton" onclick="addQuote()">Add Quote</button>
+    </div>
+  </section>
 
   <script src="script.js"></script>
 </body>
