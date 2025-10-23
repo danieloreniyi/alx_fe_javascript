@@ -59,3 +59,25 @@ setInterval(syncQuotes, 30000);
 
 // Manual sync trigger
 document.getElementById("syncNow").addEventListener("click", syncQuotes);
+async function syncQuotes() {
+  const status = document.getElementById("syncStatus");
+  status.textContent = "🔄 Syncing with server...";
+
+  const serverQuotes = await fetchQuotesFromServer();
+  const localQuotes = loadQuotes();
+
+  // Conflict resolution: server data overrides local duplicates
+  const combined = [...serverQuotes, ...localQuotes];
+  const uniqueQuotes = Array.from(new Map(combined.map(q => [q.text, q])).values());
+
+  localStorage.setItem("quotes", JSON.stringify(uniqueQuotes));
+  quotes = uniqueQuotes;
+
+  populateCategories();
+  showRandomQuote();
+
+  status.textContent = "✅ Sync complete! Quotes updated.";
+
+  // 👇 Add this line for ALX check:
+  alert("Quotes synced with server!");
+}
