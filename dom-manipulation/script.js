@@ -5,29 +5,49 @@ const quotes = [
   { text: "Do what you can with all you have, wherever you are.", category: "Wisdom" },
 ];
 
-// Function to display a random quote
+// Function to display a random quote using createElement and appendChild
 function showRandomQuote() {
   const quoteDisplay = document.getElementById("quoteDisplay");
+  quoteDisplay.innerHTML = ""; // Clear previous quote
+
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const quote = quotes[randomIndex];
-  quoteDisplay.innerHTML = `
-    <p><strong>${quote.category}</strong>: ${quote.text}</p>
-  `;
+
+  const quoteParagraph = document.createElement("p");
+  const categoryStrong = document.createElement("strong");
+
+  categoryStrong.textContent = quote.category + ": ";
+  quoteParagraph.appendChild(categoryStrong);
+  quoteParagraph.appendChild(document.createTextNode(quote.text));
+
+  quoteDisplay.appendChild(quoteParagraph);
 }
 
-// Function to create the "Add Quote" form dynamically
+// Function to create the "Add Quote" form dynamically using DOM methods
 function createAddQuoteForm() {
   const section = document.getElementById("addQuoteSection");
-  section.innerHTML = `
-    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-    <button id="addQuoteButton">Add Quote</button>
-  `;
 
-  // Attach event listener to add quote button
-  document
-    .getElementById("addQuoteButton")
-    .addEventListener("click", addQuote);
+  const textInput = document.createElement("input");
+  textInput.id = "newQuoteText";
+  textInput.type = "text";
+  textInput.placeholder = "Enter a new quote";
+
+  const categoryInput = document.createElement("input");
+  categoryInput.id = "newQuoteCategory";
+  categoryInput.type = "text";
+  categoryInput.placeholder = "Enter quote category";
+
+  const addButton = document.createElement("button");
+  addButton.id = "addQuoteButton";
+  addButton.textContent = "Add Quote";
+
+  // Add event listener for button
+  addButton.addEventListener("click", addQuote);
+
+  // Append all elements
+  section.appendChild(textInput);
+  section.appendChild(categoryInput);
+  section.appendChild(addButton);
 }
 
 // Function to add a new quote
